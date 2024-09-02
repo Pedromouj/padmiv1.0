@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "padmi",
+    "slug": "padmi",
+    "version": "1.0.0" ,
+    "orientation": "portrait",
+    "icon": "./assets/tennis.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/tennis.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/tennis.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.mojave882.AwesomeProject" ,
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/tennis.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c3a33853-1d8b-4671-a3f3-0f6a3d7effec"
+      }
+    }
+  }
+}

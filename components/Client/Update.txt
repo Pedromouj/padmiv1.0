@@ -1,0 +1,184 @@
+<ScrollView contentContainerStyle={styles.container}>
+<Text style={styles.title}>New Etablissement </Text>
+{!Logo && (
+  <TouchableOpacity
+    style={styles.imageButton}
+    onPressIn={() => setShowTitle("Select Photo2")}
+    onPressOut={() => setShowTitle(null)}
+    onPress={() => handleImagePicker(setLogo, "library")}
+  >
+    <Icon name="photo" size={20} color="#FFFFFF" style={styles.icon} />
+    <Text>Logo</Text>
+    {showTitle === "Select Photo2" && (
+      <Text style={styles.tooltipText}>{showTitle}</Text>
+    )}
+  </TouchableOpacity>
+)}
+
+{Logo && (
+  <View style={styles.editContainer}>
+    <Image source={{ uri: Logo }} style={styles.imagePreview} />
+
+    {/* Pencil Icon */}
+    <TouchableOpacity
+      style={styles.editIcon}
+      onPress={() => handleImagePicker(setLogo, "library")}
+    >
+      <Icon name="edit" size={24} color="#fff" />
+    </TouchableOpacity>
+  </View>
+)}
+<TextInput
+  style={styles.input}
+  placeholder="Etablissement"
+  value={raisonSocial}
+  onChangeText={setRaisonSocial}
+/>
+<TextInput
+  style={styles.input}
+  placeholder="Nom Contact"
+  value={nomContact}
+  onChangeText={setNomContact}
+/>
+<TextInput
+  style={styles.input}
+  placeholder="Prénom Contact"
+  value={prenomContact}
+  onChangeText={setPrenomContact}
+/>
+{/* <Text>{selectedType}</Text> */}
+
+<Picker
+  selectedValue={selectedType}
+  style={styles.picker}
+  onValueChange={(itemValue) => setSelectedType(itemValue)}
+>
+  {typeClients?.map((item) => (
+    <Picker.Item key={item.id} label={item.Libelle} value={item.id} />
+  ))}
+</Picker>
+
+<View style={styles.container_map}>
+  {errorMsg ? (
+    <Text>{errorMsg}</Text>
+  ) : location ? (
+    <>
+      <Text>
+        Latitude: {location.coords.latitude}, Longitude:{" "}
+        {location.coords.longitude}
+      </Text>
+      <MapView
+        style={styles.map}
+        region={region}
+        onRegionChangeComplete={(newRegion) => setRegion(newRegion)}
+      >
+        <Marker
+          coordinate={{
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          }}
+          title="You are here"
+        />
+      </MapView>
+    </>
+  ) : (
+    <Text>No location data available</Text>
+  )}
+</View>
+<TextInput
+  style={styles.input}
+  placeholder="Téléphone Contact"
+  value={telContact}
+  onChangeText={setTelContact}
+  keyboardType="phone-pad"
+/>
+<TextInput
+  style={styles.input}
+  placeholder="Email Contact"
+  value={emailContact}
+  onChangeText={setEmailContact}
+  keyboardType="email-address"
+/>
+
+<TextInput
+  style={styles.input}
+  placeholder="Commentaire"
+  value={commentaire}
+  onChangeText={setCommentaire}
+  multiline
+  numberOfLines={4}
+/>
+<View style={styles.imageContainer}>
+  <TouchableOpacity
+    style={styles.imageButton}
+    onPressIn={() => setShowTitle("Select Photo")}
+    onPressOut={() => setShowTitle(null)}
+    onPress={() => handleImagePicker(setFrontImage, "library")}
+  >
+    <Icon name="photo" size={20} color="#FFFFFF" style={styles.icon} />
+    {showTitle === "Select Photo" && (
+      <Text style={styles.tooltipText}>{showTitle}</Text>
+    )}
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={styles.imageButton}
+    onPressIn={() => setShowTitle("BC (Front)")}
+    onPressOut={() => setShowTitle(null)}
+    onPress={() => handleImagePicker(setFrontImage, "camera")}
+  >
+    <Icon name="camera" size={20} color="#FFFFFF" style={styles.icon} />
+    <Text style={styles.buttonText}>BC (Front)</Text>
+    {showTitle === "BC (Front)" && (
+      <Text style={styles.tooltipText}>{showTitle}</Text>
+    )}
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={styles.imageButton}
+    onPressIn={() => setShowTitle("BC (Back)")}
+    onPressOut={() => setShowTitle(null)}
+    onPress={() => handleImagePicker(setBackImage, "camera")}
+  >
+    <Icon name="camera" size={20} color="#FFFFFF" style={styles.icon} />
+    <Text style={styles.buttonText}>BC (Back)</Text>
+    {showTitle === "BC (Back)" && (
+      <Text style={styles.tooltipText}>{showTitle}</Text>
+    )}
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={styles.imageButton}
+    onPressIn={() => setShowTitle("Capture Additional")}
+    onPressOut={() => setShowTitle(null)}
+    onPress={() => insertImagesCount(setImagesCount, "camera")}
+  >
+    <Icon name="plus" size={20} color="#FFFFFF" style={styles.icon} />
+    <Icon name="camera" size={20} color="#FFFFFF" style={styles.icon} />
+    {showTitle === "Capture Additional" && (
+      <Text style={styles.tooltipText}>{showTitle}</Text>
+    )}
+  </TouchableOpacity>
+</View>
+{frontImage && (
+  <Image source={{ uri: frontImage }} style={styles.imagePreview} />
+)}
+
+{backImage && (
+  <Image source={{ uri: backImage }} style={styles.imagePreview} />
+)}
+{imagesCount.length > 0 && (
+  <FlatList
+    data={imagesCount}
+    keyExtractor={(item, index) => index.toString()}
+    renderItem={({ item }) => (
+      <Image source={{ uri: item.uri }} style={styles.additionalImage} />
+    )}
+    horizontal
+    showsHorizontalScrollIndicator={false}
+  />
+)}
+<TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
+  <Text style={styles.uploadButtonText}>Valider</Text>
+</TouchableOpacity>
+</ScrollView>
